@@ -5,6 +5,7 @@ import numpy as np
 import mediapipe as mp
 import math
 import pandas as pd
+from plyer import notification
 
 # MediaPipe setup
 mp_face_mesh = mp.solutions.face_mesh
@@ -78,8 +79,10 @@ last_reset = time.time()
 EYE_AR_THRESH = 0.27
 EYE_AR_CONSEC_FRAMES = 3
 MIN_BLINKS_PER_MINUTE = 15
+RE_ALERT_INTERVAL_SEC = 30 # Re-alert every 30 seconds
 # Extra state
 bad_distance_start = None
+last_alert_time = None
 BLINK_HISTORY = []
 
 with mp_face_mesh.FaceMesh(
@@ -121,15 +124,30 @@ with mp_face_mesh.FaceMesh(
         # Distance checks
         if iris_dist_cm:
             distance_text.info(f"Distance: {iris_dist_cm:.1f} cm")   # always show distance
-            
-            if iris_dist_cm < 30 or iris_dist_cm > 80:
+            is_bad_posture = iris_dist_cm < 40 or iris_dist_cm > 80
+
+            if is_bad_posture:
                 if bad_distance_start is None:
                     bad_distance_start = time.time()
-                elif time.time() - bad_distance_start > 10:
-                    status_box.warning(f"⚠️ Poor posture for 1 min! ({iris_dist_cm:.1f} cm)")
-                    st.toast(f"⚠️ Poor posture detected! Move to 30-80 cm from screen.", icon="📏")
+                
+                if time.time() - bad_distance_start > 10:
+                    status_box.warning(f"⚠️ Poor posture for over 10 seconds! ({iris_dist_cm:.1f} cm)")
+                    
+                    # Check if it's time for a new alert (initial or re-alert)
+                    if last_alert_time is None or (time.time() - last_alert_time > RE_ALERT_INTERVAL_SEC):
+                        #st.toast(f"🚨 Poor posture detected! Please adjust your distance.", icon="📏")
+                        # Use plyer for a system-level notification
+                        notification.notify(
+                            title="Eye Strain Monitor",
+                            message=f"Poor posture detected! Please adjust your distance.",
+                            app_name="Eye Strain Monitor"
+                        )
+                        last_alert_time = time.time()
             else:
+                # Posture is good, reset timers and clear warnings
                 bad_distance_start = None
+                last_alert_time = None
+                status_box.empty()  # Clear the warning when posture is good
 
 
         blink_counter.info(f"Total Blinks: {TOTAL}")
