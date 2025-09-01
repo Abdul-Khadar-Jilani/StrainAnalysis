@@ -4,5 +4,7 @@ imutils
 opencv-python
 gtts
 mediapipe
-plyer
 streamlit
+streamlit-webrtc
+av
+plyer # It's good practice to keep this at the end if it's not a core library
