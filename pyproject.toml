@@ -12,3 +12,4 @@ dependencies = [
     "streamlit-autorefresh>=1.0.1",
     "streamlit-webrtc>=0.63.4",
 ]
+
