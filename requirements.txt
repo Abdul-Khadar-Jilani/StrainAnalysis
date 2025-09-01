@@ -3,4 +3,6 @@ scipy
 imutils
 opencv-python
 gtts
-
+mediapipe
+plyer
+streamlit
