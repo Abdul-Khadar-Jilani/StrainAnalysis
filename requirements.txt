@@ -1,9 +1,5 @@
-numpy
-scipy
-imutils
-opencv-python
-mediapipe
-streamlit
-streamlit-webrtc
-av
-plyer # It's good practice to keep this at the end if it's not a core library
+opencv-python>=4.5.0
+mediapipe>=0.10.0
+PyQt5>=5.15.0
+plyer>=2.0.0
+numpy>=1.19.0
