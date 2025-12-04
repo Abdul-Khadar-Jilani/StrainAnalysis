@@ -34,7 +34,7 @@ A real-time eye strain monitoring application that tracks your blink rate and di
 - **Browser-based** - No installation required
 - **Modern UI** - Sleek dark theme with glassmorphism
 - **MediaPipe WASM** - Runs entirely in browser
-- **[Try it live](https://your-github-username.github.io/strain_analysis)** 🚀
+- **[Try it live](https://abdul-khadar-jilani.github.io/StrainAnalysis/)** 🚀
 
 ## 📋 Prerequisites
 
