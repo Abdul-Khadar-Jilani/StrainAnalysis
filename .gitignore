@@ -8,8 +8,25 @@ wheels/
 
 # Virtual environments
 .venv
+venv*/
+build_env*/
+
+# UV lock file (optional - remove if you want to commit it)
 uv.lock
-pyproject.toml
+
+# PyInstaller
+*.spec
+hook-*.py
+runtime-hook-*.py
+*.zip
+
+# Large model files
 shape_predictor_68_face_landmarks.dat
-build*
-venv*
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
